@@ -1,1 +1,80 @@
-<body> home </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Ranking</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="top-bar">
+            <div>
+                <p class="eyebrow">TOP SELLERS</p>
+                <h1>Game Ranking</h1>
+            </div>
+            <a class="login-btn" href="#">Sign in</a>
+        </header>
+
+        <section class="toolbar">
+            <form method="get" class="toolbar-form">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Search games, tags, or genres"
+                    value="{{ search_query }}"
+                >
+                <select name="genre">
+                    <option value="all" {% if selected_genre == 'all' %}selected{% endif %}>All genres</option>
+                    <option value="RPG" {% if selected_genre == 'RPG' %}selected{% endif %}>RPG</option>
+                    <option value="Action" {% if selected_genre == 'Action' %}selected{% endif %}>Action</option>
+                    <option value="Simulation" {% if selected_genre == 'Simulation' %}selected{% endif %}>Simulation</option>
+                    <option value="Sandbox" {% if selected_genre == 'Sandbox' %}selected{% endif %}>Sandbox</option>
+                </select>
+                <select name="sort">
+                    <option value="score" {% if selected_sort == 'score' %}selected{% endif %}>Highest score</option>
+                    <option value="price" {% if selected_sort == 'price' %}selected{% endif %}>Lowest price</option>
+                    <option value="name" {% if selected_sort == 'name' %}selected{% endif %}>Name</option>
+                </select>
+                <button type="submit">Apply</button>
+            </form>
+        </section>
+
+        <section class="game-list">
+            {% for game in games %}
+            <article class="game-card">
+                <div class="game-rank">#{{ game.rank }}</div>
+                <div class="game-cover" style="background: {{ game.accent }};">
+                    <span>{{ game.name[0] }}</span>
+                </div>
+                <div class="game-info">
+                    <div class="game-header">
+                        <div>
+                            <p class="game-genre">{{ game.genre }}</p>
+                            <h2>{{ game.name }}</h2>
+                        </div>
+                        <div class="game-score">{{ game.score }}</div>
+                    </div>
+                    <div class="tag-row">
+                        {% for tag in game.tags %}
+                        <span>{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="game-footer">
+                        <span>{{ game.players }} players</span>
+                        <div class="price-block">
+                            {% if game.discount %}
+                            <span class="discount">-{{ game.discount }}%</span>
+                            {% endif %}
+                            <strong>¥{{ game.price }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% else %}
+            <p class="empty-state">No games matched your search.</p>
+            {% endfor %}
+        </section>
+    </div>
+</body>
+</html>

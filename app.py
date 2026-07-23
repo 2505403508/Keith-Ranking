@@ -1,11 +1,11 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, request
+from routes.pages.home import home_bp as home
+from routes.pages.game import game_bp as game
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    return render_template('home.html')
-
+app.register_blueprint(home)
+app.register_blueprint(game)
 
 if __name__ == "__main__":
     app.run(debug=True)
