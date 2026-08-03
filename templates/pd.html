@@ -1,0 +1,138 @@
+{% extends "nav.html" %} {% block title %} Companies | Keith Ranking {% endblock
+%} {% block content %}
+
+<section class="company-page-top">
+  <div class="company-page-heading">
+    <p>COMPANY DATABASE</p>
+
+    <h1>Developers and Publishers</h1>
+
+    <span>
+      Browse the companies and creators connected to the games in the Keith
+      Ranking database.
+    </span>
+  </div>
+
+  <form class="company-search-form" action="/pd" method="get">
+    <input
+      type="text"
+      name="search"
+      value="{{ search }}"
+      placeholder="Search for a company..."
+    />
+
+    <button type="submit">Search</button>
+  </form>
+</section>
+
+<section class="company-page-main">
+  <div class="company-result-row">
+    {% if search %}
+
+    <p>
+      Search results for:
+      <strong>{{ search }}</strong>
+    </p>
+
+    <a href="/pd"> Clear Search </a>
+
+    {% else %}
+
+    <p>Showing all developers and publishers</p>
+
+    {% endif %}
+  </div>
+
+  {% if companies %}
+
+  <div class="company-grid">
+    {% for company in companies %}
+
+    <a href="/company/{{ company['id'] }}" class="company-card">
+      <div class="company-card-top">
+        <div class="company-card-letter">{{ company['name'][0] }}</div>
+
+        <div class="company-card-number">
+          {% if company['id'] < 10 %} #00{{ company['id'] }} {% elif
+          company['id'] < 100 %} #0{{ company['id'] }} {% else %} #{{
+          company['id'] }} {% endif %}
+        </div>
+      </div>
+
+      <h2>{{ company['name'] }}</h2>
+
+      <p class="company-started">
+        {% if company['started'] %} Started: {{ company['started'] }} {% else %}
+        Started: Information unavailable {% endif %}
+      </p>
+
+      <div class="company-role-row">
+        {% if company['developed_count'] > 0 %}
+
+        <span class="company-developer-label"> Developer </span>
+
+        {% endif %} {% if company['published_count'] > 0 %}
+
+        <span class="company-publisher-label"> Publisher </span>
+
+        {% endif %}
+      </div>
+
+      <div class="company-count-area">
+        <div>
+          <strong> {{ company['developed_count'] }} </strong>
+
+          <span> Games Developed </span>
+        </div>
+
+        <div>
+          <strong> {{ company['published_count'] }} </strong>
+
+          <span> Games Published </span>
+        </div>
+      </div>
+
+      <div class="company-card-bottom">
+        <span> View Company Details </span>
+
+        <strong> → </strong>
+      </div>
+    </a>
+
+    {% endfor %}
+  </div>
+
+  {% else %}
+
+  <div class="company-empty-box">
+    <h2>No companies were found</h2>
+
+    <p>Try searching with a different company name.</p>
+
+    <a href="/pd"> View All Companies </a>
+  </div>
+
+  {% endif %}
+</section>
+
+<footer class="home-footer">
+  <div>
+    <h3>Keith Ranking</h3>
+
+    <p>A game ranking and discovery website.</p>
+  </div>
+
+  <div class="home-footer-links">
+    <a href="/"> Home </a>
+
+    <a href="/all"> Games </a>
+
+    <a href="/pd"> Companies </a>
+
+    <a href="/ranking"> Ranking </a>
+  </div>
+
+  <p>© 2026 Keith Ranking</p>
+</footer>
+
+{% endblock %}

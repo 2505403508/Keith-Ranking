@@ -1,11 +1,180 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    1 game
-</body>
-</html>
+{% extends "nav.html" %} {% block title %} {{ game['name'] }} | Keith Ranking {%
+endblock %} {% block content %}
+
+<section class="game-detail-banner">
+  <img
+    src="{{ url_for('static', filename='images/banners/' ~ game['banner']) }}"
+    alt="{{ game['name'] }}"
+  />
+
+  <div class="game-banner-dark"></div>
+
+  <div class="game-banner-content">
+    <a href="/all" class="game-back-link"> ← Back to All Games </a>
+
+    <p class="game-detail-rank">
+      {% if game['id'] < 10 %} RANKED #0{{ game['id'] }} {% else %} RANKED #{{
+      game['id'] }} {% endif %}
+    </p>
+
+    <h1>{{ game['name'] }}</h1>
+
+    <p class="game-detail-genre">{{ game['genre'] }}</p>
+  </div>
+</section>
+
+<section class="game-detail-main">
+  <div class="game-detail-left">
+    <div class="game-cover-box">
+      <img
+        src="{{ url_for('static', filename='images/covers/' ~ game['cover']) }}"
+        alt="{{ game['name'] }}"
+      />
+    </div>
+  </div>
+
+  <div class="game-detail-right">
+    <div class="game-detail-heading">
+      <p>GAME INFORMATION</p>
+
+      <h2>About This Game</h2>
+
+      <span>
+        View the basic information about this game, including its ranking,
+        release date, genre, developers and publishers.
+      </span>
+    </div>
+
+    <div class="game-information-grid">
+      <div class="game-information-box">
+        <p>Current Ranking</p>
+
+        <h3>
+          {% if game['id'] < 10 %} #0{{ game['id'] }} {% else %} #{{ game['id']
+          }} {% endif %}
+        </h3>
+      </div>
+
+      <div class="game-information-box">
+        <p>Release Date</p>
+
+        <h3>{{ game['release_date'] }}</h3>
+      </div>
+
+      <div class="game-information-box game-information-wide">
+        <p>Genre</p>
+
+        <h3>{{ game['genre'] }}</h3>
+      </div>
+    </div>
+
+    <div class="game-company-area">
+      <div class="game-company-section">
+        <div class="game-company-heading">
+          <p>DEVELOPED BY</p>
+
+          <h2>Developers</h2>
+        </div>
+
+        <div class="game-company-list">
+          {% if developers %} {% for developer in developers %}
+
+          <div class="game-company-card">
+            <div class="game-company-letter">{{ developer['name'][0] }}</div>
+
+            <div>
+              <h3>{{ developer['name'] }}</h3>
+
+              <p>Started: {{ developer['started'] }}</p>
+            </div>
+          </div>
+
+          {% endfor %} {% else %}
+
+          <div class="game-company-card">
+            <div>
+              <h3>Developer information unavailable</h3>
+            </div>
+          </div>
+
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="game-company-section">
+        <div class="game-company-heading">
+          <p>PUBLISHED BY</p>
+
+          <h2>Publishers</h2>
+        </div>
+
+        <div class="game-company-list">
+          {% if publishers %} {% for publisher in publishers %}
+
+          <div class="game-company-card">
+            <div class="game-company-letter">{{ publisher['name'][0] }}</div>
+
+            <div>
+              <h3>{{ publisher['name'] }}</h3>
+
+              <p>Started: {{ publisher['started'] }}</p>
+            </div>
+          </div>
+
+          {% endfor %} {% else %}
+
+          <div class="game-company-card">
+            <div>
+              <h3>Publisher information unavailable</h3>
+            </div>
+          </div>
+
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="game-detail-buttons">
+      <a href="/all" class="game-detail-blue-button"> Browse More Games </a>
+
+      <a href="/ranking" class="game-detail-dark-button"> View Ranking </a>
+    </div>
+  </div>
+</section>
+
+<section class="game-detail-bottom">
+  <div>
+    <p>KEEP EXPLORING</p>
+
+    <h2>Looking for another game?</h2>
+
+    <span>
+      Return to the full game database and discover another title from the
+      ranking.
+    </span>
+  </div>
+
+  <a href="/all"> View All Games </a>
+</section>
+
+<footer class="home-footer">
+  <div>
+    <h3>Keith Ranking</h3>
+
+    <p>A game ranking and discovery website.</p>
+  </div>
+
+  <div class="home-footer-links">
+    <a href="/"> Home </a>
+
+    <a href="/all"> Games </a>
+
+    <a href="/pd"> Companies </a>
+
+    <a href="/ranking"> Ranking </a>
+  </div>
+
+  <p>© 2026 Keith Ranking</p>
+</footer>
+
+{% endblock %}

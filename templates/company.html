@@ -1,0 +1,152 @@
+{% extends "nav.html" %} {% block title %} {{ company['name'] }} | Keith Ranking
+{% endblock %} {% block content %}
+
+<section class="company-detail-top">
+  <a href="/pd" class="company-detail-back"> ← Back to All Companies </a>
+
+  <div class="company-detail-heading">
+    <div class="company-detail-letter">{{ company['name'][0] }}</div>
+
+    <div>
+      <p>GAME COMPANY</p>
+
+      <h1>{{ company['name'] }}</h1>
+
+      <span> Started: {{ company['started'] }} </span>
+    </div>
+  </div>
+</section>
+
+<section class="company-detail-summary">
+  <div class="company-summary-box">
+    <strong> {{ developed_games | length }} </strong>
+
+    <span> Games Developed </span>
+  </div>
+
+  <div class="company-summary-box">
+    <strong> {{ published_games | length }} </strong>
+
+    <span> Games Published </span>
+  </div>
+
+  <div class="company-summary-box">
+    <strong> {{ company['started'] }} </strong>
+
+    <span> Year Started </span>
+  </div>
+</section>
+
+<section class="company-games-section">
+  <div class="company-games-heading">
+    <p>DEVELOPMENT</p>
+
+    <h2>Games Developed</h2>
+
+    <span> Games that were developed by {{ company['name'] }}. </span>
+  </div>
+
+  {% if developed_games %}
+
+  <div class="company-games-grid">
+    {% for game in developed_games %}
+
+    <a href="/game/{{ game['id'] }}" class="company-game-card">
+      <img
+        src="{{ url_for('static', filename='images/covers/' ~ game['cover']) }}"
+        alt="{{ game['name'] }}"
+      />
+
+      <div class="company-game-information">
+        <h3>{{ game['name'] }}</h3>
+
+        <p>{{ game['genre'] }}</p>
+
+        <span> {{ game['release_date'] }} </span>
+      </div>
+    </a>
+
+    {% endfor %}
+  </div>
+
+  {% else %}
+
+  <div class="company-no-games">
+    <p>There are no developed games recorded for this company.</p>
+  </div>
+
+  {% endif %}
+</section>
+
+<section class="company-games-section company-published-section">
+  <div class="company-games-heading">
+    <p>PUBLISHING</p>
+
+    <h2>Games Published</h2>
+
+    <span> Games that were published by {{ company['name'] }}. </span>
+  </div>
+
+  {% if published_games %}
+
+  <div class="company-games-grid">
+    {% for game in published_games %}
+
+    <a href="/game/{{ game['id'] }}" class="company-game-card">
+      <img
+        src="{{ url_for('static', filename='images/covers/' ~ game['cover']) }}"
+        alt="{{ game['name'] }}"
+      />
+
+      <div class="company-game-information">
+        <h3>{{ game['name'] }}</h3>
+
+        <p>{{ game['genre'] }}</p>
+
+        <span> {{ game['release_date'] }} </span>
+      </div>
+    </a>
+
+    {% endfor %}
+  </div>
+
+  {% else %}
+
+  <div class="company-no-games">
+    <p>There are no published games recorded for this company.</p>
+  </div>
+
+  {% endif %}
+</section>
+
+<section class="company-detail-bottom">
+  <div>
+    <h2>Explore more companies</h2>
+
+    <p>View other developers and publishers in the database.</p>
+  </div>
+
+  <a href="/pd"> View All Companies </a>
+</section>
+
+<footer class="home-footer">
+  <div>
+    <h3>Keith Ranking</h3>
+
+    <p>A game ranking and discovery website.</p>
+  </div>
+
+  <div class="home-footer-links">
+    <a href="/"> Home </a>
+
+    <a href="/all"> Games </a>
+
+    <a href="/pd"> Companies </a>
+
+    <a href="/ranking"> Ranking </a>
+  </div>
+
+  <p>© 2026 Keith Ranking</p>
+</footer>
+
+{% endblock %}

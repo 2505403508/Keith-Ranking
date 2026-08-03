@@ -1,4 +1,199 @@
-{% extends "nav.html" %} {% block title %} Home | Keith Ranking {% endblock %}
-{% block content %}
-<h1></h1>
+{% extends "nav.html" %} {% block title %} Ranking | Keith Ranking {% endblock
+%} {% block content %}
+
+<section class="ranking-page-top">
+  <div class="ranking-page-heading">
+    <p>KEITH GAME RANKING</p>
+
+    <h1>Best Games of 2026</h1>
+
+    <span>
+      Explore the complete ranking of 120 games. Click any game to view its full
+      information.
+    </span>
+  </div>
+
+  <form class="ranking-search-form" action="/ranking" method="get">
+    <input
+      type="text"
+      name="search"
+      value="{{ search }}"
+      placeholder="Search the ranking..."
+    />
+
+    <button type="submit">Search</button>
+  </form>
+</section>
+
+<section class="ranking-top-three">
+  <div class="ranking-section-heading">
+    <p>TOP THREE</p>
+
+    <h2>Highest Ranked Games</h2>
+  </div>
+
+  <div class="ranking-podium-grid">
+    {% for game in top_games %}
+
+    <a href="/game/{{ game['id'] }}" class="ranking-podium-card">
+      <div class="ranking-podium-image">
+        <img
+          src="{{ url_for('static', filename='images/banners/' ~ game['banner']) }}"
+          alt="{{ game['name'] }}"
+        />
+
+        <div class="ranking-podium-dark"></div>
+
+        {% if loop.index == 1 %}
+
+        <div class="ranking-podium-number ranking-first">#1</div>
+
+        {% elif loop.index == 2 %}
+
+        <div class="ranking-podium-number ranking-second">#2</div>
+
+        {% else %}
+
+        <div class="ranking-podium-number ranking-third">#3</div>
+
+        {% endif %}
+      </div>
+
+      <div class="ranking-podium-information">
+        <h3>{{ game['name'] }}</h3>
+
+        <p>{{ game['genre'] }}</p>
+
+        <div class="ranking-podium-bottom">
+          <span> {{ game['release_date'] }} </span>
+
+          <strong> View Game → </strong>
+        </div>
+      </div>
+    </a>
+
+    {% endfor %}
+  </div>
+</section>
+
+<section class="ranking-full-section">
+  <div class="ranking-full-heading">
+    <div>
+      <p>COMPLETE LIST</p>
+
+      <h2>Full Game Ranking</h2>
+    </div>
+
+    <div class="ranking-result-information">
+      {% if search %}
+
+      <p>
+        Results for:
+        <strong>{{ search }}</strong>
+      </p>
+
+      <a href="/ranking"> Clear Search </a>
+
+      {% else %}
+
+      <p>Showing all {{ games | length }} games</p>
+
+      {% endif %}
+    </div>
+  </div>
+
+  {% if games %}
+
+  <div class="ranking-table-heading">
+    <span> Rank </span>
+
+    <span> Game </span>
+
+    <span> Genre </span>
+
+    <span> Release Date </span>
+
+    <span> Details </span>
+  </div>
+
+  <div class="ranking-full-list">
+    {% for game in games %}
+
+    <a href="/game/{{ game['id'] }}" class="ranking-full-item">
+      <div class="ranking-full-number">
+        {% if game['id'] < 10 %} #00{{ game['id'] }} {% elif game['id'] < 100 %}
+        #0{{ game['id'] }} {% else %} #{{ game['id'] }} {% endif %}
+      </div>
+
+      <div class="ranking-game-name">
+        <img
+          src="{{ url_for('static', filename='images/covers/' ~ game['cover']) }}"
+          alt="{{ game['name'] }}"
+        />
+
+        <div>
+          <h3>{{ game['name'] }}</h3>
+
+          <p>Ranked game number {{ game['id'] }}</p>
+        </div>
+      </div>
+
+      <div class="ranking-game-genre">{{ game['genre'] }}</div>
+
+      <div class="ranking-game-date">{{ game['release_date'] }}</div>
+
+      <div class="ranking-game-link">View Details →</div>
+    </a>
+
+    {% endfor %}
+  </div>
+
+  {% else %}
+
+  <div class="ranking-empty-box">
+    <h2>No games were found</h2>
+
+    <p>Try searching with a different game name.</p>
+
+    <a href="/ranking"> View Full Ranking </a>
+  </div>
+
+  {% endif %}
+</section>
+
+<section class="ranking-bottom-box">
+  <div>
+    <p>DISCOVER MORE</p>
+
+    <h2>Browse the full game database</h2>
+
+    <span>
+      View every game as a cover card and explore more information about each
+      title.
+    </span>
+  </div>
+
+  <a href="/all"> Browse All Games </a>
+</section>
+
+<footer class="home-footer">
+  <div>
+    <h3>Keith Ranking</h3>
+
+    <p>A game ranking and discovery website.</p>
+  </div>
+
+  <div class="home-footer-links">
+    <a href="/"> Home </a>
+
+    <a href="/all"> Games </a>
+
+    <a href="/pd"> Companies </a>
+
+    <a href="/ranking"> Ranking </a>
+  </div>
+
+  <p>© 2026 Keith Ranking</p>
+</footer>
+
 {% endblock %}

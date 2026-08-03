@@ -1,0 +1,138 @@
+from flask import Blueprint, render_template, request
+import sqlite3
+
+
+pd_bp = Blueprint("pd", __name__)
+
+
+@pd_bp.route("/pd")
+def all_companies():
+    search = request.args.get("search", "")
+
+    connection = sqlite3.connect("database/app.db")
+    connection.row_factory = sqlite3.Row
+
+    if search == "":
+        companies = connection.execute(
+            """
+            SELECT
+                company.id,
+                company.name,
+                company.started,
+
+                (
+                    SELECT COUNT(*)
+                    FROM game_developer
+                    WHERE game_developer.company_id = company.id
+                ) AS developed_count,
+
+                (
+                    SELECT COUNT(*)
+                    FROM game_publisher
+                    WHERE game_publisher.company_id = company.id
+                ) AS published_count
+
+            FROM company
+            ORDER BY company.name
+            """
+        ).fetchall()
+
+    else:
+        companies = connection.execute(
+            """
+            SELECT
+                company.id,
+                company.name,
+                company.started,
+
+                (
+                    SELECT COUNT(*)
+                    FROM game_developer
+                    WHERE game_developer.company_id = company.id
+                ) AS developed_count,
+
+                (
+                    SELECT COUNT(*)
+                    FROM game_publisher
+                    WHERE game_publisher.company_id = company.id
+                ) AS published_count
+
+            FROM company
+            WHERE company.name LIKE ?
+            ORDER BY company.name
+            """,
+            ("%" + search + "%",)
+        ).fetchall()
+
+    connection.close()
+
+    return render_template(
+        "pd.html",
+        companies=companies,
+        search=search
+    )
+
+
+@pd_bp.route("/company/<int:company_id>")
+def company_detail(company_id):
+    connection = sqlite3.connect("database/app.db")
+    connection.row_factory = sqlite3.Row
+
+    company = connection.execute(
+        """
+        SELECT id, name, started
+        FROM company
+        WHERE id = ?
+        """,
+        (company_id,)
+    ).fetchone()
+
+    developed_games = connection.execute(
+        """
+        SELECT
+            game.id,
+            game.name,
+            game.release_date,
+            game.genre,
+            game.cover
+
+        FROM game
+        JOIN game_developer
+        ON game.id = game_developer.game_id
+
+        WHERE game_developer.company_id = ?
+        ORDER BY game.id
+        """,
+        (company_id,)
+    ).fetchall()
+
+    published_games = connection.execute(
+        """
+        SELECT
+            game.id,
+            game.name,
+            game.release_date,
+            game.genre,
+            game.cover
+
+        FROM game
+        JOIN game_publisher
+        ON game.id = game_publisher.game_id
+
+        WHERE game_publisher.company_id = ?
+        ORDER BY game.id
+        """,
+        (company_id,)
+    ).fetchall()
+
+    connection.close()
+
+    if company is None:
+        return "Company not found", 404
+
+    return render_template(
+        "company.html",
+        company=company,
+        developed_games=developed_games,
+        published_games=published_games
+    )
