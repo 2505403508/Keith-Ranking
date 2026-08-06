@@ -1,0 +1,135 @@
+{% extends "nav.html" %} {% block title %} Recommendation | Keith Ranking {%
+endblock %} {% block content %}
+
+<section class="recommendation-page-top">
+  <div class="recommendation-page-heading">
+    <p>RANDOM GAME RECOMMENDATION</p>
+
+    <h1>Your Recommended Game</h1>
+
+    <span>
+      Keith Ranking has selected one game from the database for you. Refresh the
+      recommendation to discover another game.
+    </span>
+  </div>
+</section>
+
+{% if game %}
+
+<section class="recommendation-game-section">
+  <div class="recommendation-banner">
+    <img
+      src="{{ url_for('static', filename='images/banners/' ~ game['banner']) }}"
+      alt="{{ game['name'] }}"
+    />
+
+    <div class="recommendation-banner-dark"></div>
+
+    <div class="recommendation-banner-text">
+      <p>WE RECOMMEND</p>
+
+      <h2>{{ game['name'] }}</h2>
+
+      <span> {{ game['genre'] }} </span>
+    </div>
+  </div>
+
+  <div class="recommendation-information">
+    <div class="recommendation-cover">
+      <img
+        src="{{ url_for('static', filename='images/covers/' ~ game['cover']) }}"
+        alt="{{ game['name'] }}"
+      />
+    </div>
+
+    <div class="recommendation-details">
+      <p class="recommendation-small-title">GAME INFORMATION</p>
+
+      <h2>{{ game['name'] }}</h2>
+
+      <p class="recommendation-description">
+        This game was randomly selected from the Keith Ranking database. You can
+        view its full page or ask the website to recommend another game.
+      </p>
+
+      <div class="recommendation-detail-grid">
+        <div class="recommendation-detail-box">
+          <span> Ranking </span>
+
+          <strong>
+            {% if game['id'] < 10 %} #0{{ game['id'] }} {% else %} #{{
+            game['id'] }} {% endif %}
+          </strong>
+        </div>
+
+        <div class="recommendation-detail-box">
+          <span> Release Date </span>
+
+          <strong> {{ game['release_date'] }} </strong>
+        </div>
+
+        <div class="recommendation-detail-box recommendation-detail-wide">
+          <span> Genre </span>
+
+          <strong> {{ game['genre'] }} </strong>
+        </div>
+      </div>
+
+      <div class="recommendation-buttons">
+        <a href="/game/{{ game['id'] }}" class="recommendation-main-button">
+          View Game Details
+        </a>
+
+        <a href="/recommendation" class="recommendation-second-button">
+          Recommend Another Game
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% else %}
+
+<section class="recommendation-empty">
+  <h2>No game could be recommended</h2>
+
+  <p>There are currently no games available in the database.</p>
+
+  <a href="/all"> Browse All Games </a>
+</section>
+
+{% endif %}
+
+<section class="recommendation-bottom">
+  <div>
+    <p>KEEP EXPLORING</p>
+
+    <h2>Browse every game in the ranking</h2>
+
+    <span> View the full game database and choose a game yourself. </span>
+  </div>
+
+  <a href="/all"> View All Games </a>
+</section>
+
+<footer class="home-footer">
+  <div>
+    <h3>Keith Ranking</h3>
+
+    <p>A game ranking and discovery website.</p>
+  </div>
+
+  <div class="home-footer-links">
+    <a href="/"> Home </a>
+
+    <a href="/all"> Games </a>
+
+    <a href="/pd"> Companies </a>
+
+    <a href="/ranking"> Ranking </a>
+  </div>
+
+  <p>© 2026 Keith Ranking</p>
+</footer>
+
+{% endblock %}

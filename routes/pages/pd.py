@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, abort
 import sqlite3
 
 
@@ -128,7 +128,7 @@ def company_detail(company_id):
     connection.close()
 
     if company is None:
-        return "Company not found", 404
+        abort(404)
 
     return render_template(
         "company.html",

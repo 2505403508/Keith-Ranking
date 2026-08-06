@@ -1,0 +1,20 @@
+{% extends "nav.html" %} {% block title %} {{ error_code }} | Keith Ranking {%
+endblock %} {% block content %}
+
+<section class="all-games-top">
+  <div class="all-games-heading">
+    <p>ERROR {{ error_code }}</p>
+    <h1>{{ error_title }}</h1>
+    <span>{{ error_message }}</span>
+  </div>
+</section>
+
+<section class="all-games-section">
+  <div class="all-games-empty">
+    <h2>{{ error_title }}</h2>
+    <p>{{ error_message }}</p>
+    <a href="/">Return to Home</a>
+  </div>
+</section>
+
+{% endblock %}

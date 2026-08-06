@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, abort
 import sqlite3
 
 
@@ -81,8 +81,8 @@ def game_detail(game_id):
     connection.close()
 
     if game is None:
-        return "Game not found", 404
-
+        abort(404)
+    
     return render_template(
         "game.html",
         game=game,
