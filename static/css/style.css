@@ -1983,3 +1983,138 @@ input {
     height: 420px;
   }
 }
+
+.navbar-account {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+.navbar-username {
+  color: #56a3ff;
+  font-size: 14px;
+  font-weight: bold;
+}
+.navbar-login,
+.navbar-signup {
+  border-radius: 7px;
+  color: #f8fafc;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+.navbar-login {
+  border: 1px solid #334155;
+}
+.navbar-signup {
+  background-color: #2f80ed;
+}
+.navbar-login:hover {
+  border-color: #56a3ff;
+  color: #56a3ff;
+}
+.navbar-signup:hover {
+  background-color: #56a3ff;
+}
+
+.account-page {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: calc(100vh - 76px);
+  padding: 60px 20px;
+}
+.account-box {
+  background-color: #111827;
+  border: 1px solid #263247;
+  border-radius: 12px;
+  max-width: 470px;
+  padding: 40px;
+  width: 100%;
+}
+.account-small-title {
+  color: #56a3ff;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+.account-box h1 {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+.account-text {
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.account-error {
+  background-color: #3b1720;
+  border: 1px solid #ef4444;
+  border-radius: 7px;
+  color: #fecaca;
+  margin-bottom: 20px;
+  padding: 12px;
+}
+.account-form {
+  display: flex;
+  flex-direction: column;
+}
+.account-form label {
+  color: #cbd5e1;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+.account-form input {
+  background-color: #172033;
+  border: 1px solid #334155;
+  border-radius: 7px;
+  color: #f8fafc;
+  font-size: 15px;
+  height: 46px;
+  margin-bottom: 18px;
+  outline: none;
+  padding: 0 13px;
+}
+.account-form input:focus {
+  border-color: #2f80ed;
+}
+.account-form button {
+  background-color: #2f80ed;
+  border: none;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  height: 48px;
+  margin-top: 4px;
+}
+.account-form button:hover {
+  background-color: #56a3ff;
+}
+.account-switch {
+  color: #94a3b8;
+  margin-top: 22px;
+  text-align: center;
+}
+.account-switch a {
+  color: #56a3ff;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 700px) {
+  .navbar-account {
+    justify-content: center;
+  }
+  .account-page {
+    min-height: auto;
+    padding: 45px 4%;
+  }
+  .account-box {
+    padding: 30px 23px;
+  }
+  .account-box h1 {
+    font-size: 34px;
+  }
+}

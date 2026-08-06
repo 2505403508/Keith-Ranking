@@ -34,6 +34,21 @@
             <a href="/ranking">Ranking</a>
           </li>
         </ul>
+        <div class="navbar-account">
+          {% if session.get("user_id") %}
+
+          <span class="navbar-username"> {{ session.get("username") }} </span>
+
+          <a href="/logout" class="navbar-login"> Log Out </a>
+
+          {% else %}
+
+          <a href="/login" class="navbar-login"> Log In </a>
+
+          <a href="/signup" class="navbar-signup"> Sign Up </a>
+
+          {% endif %}
+        </div>
       </div>
     </nav>
 

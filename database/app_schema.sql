@@ -55,7 +55,7 @@ CREATE TABLE user (
     id INTEGER PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
+    password_hash TEXT NOT NULL
 );
 
 CREATE TABLE favourite (
@@ -72,6 +72,24 @@ CREATE TABLE favourite (
 
     FOREIGN KEY (game_id)
         REFERENCES game(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE company_favourite (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    company_id INTEGER NOT NULL,
+
+    UNIQUE (user_id, company_id),
+
+    FOREIGN KEY (user_id)
+        REFERENCES user(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (company_id)
+        REFERENCES company(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
@@ -93,3 +111,9 @@ CREATE INDEX idx_favourite_user
 
 CREATE INDEX idx_favourite_game
     ON favourite(game_id);
+
+CREATE INDEX idx_company_favourite_user
+    ON company_favourite(user_id);
+
+CREATE INDEX idx_company_favourite_company
+    ON company_favourite(company_id);

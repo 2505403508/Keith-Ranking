@@ -4,17 +4,20 @@ from routes.pages.game import game_bp as game
 from routes.pages.ranking import ranking_bp as ranking
 from routes.pages.pd import pd_bp as pd
 from routes.pages.recommendation import recommendation_bp as recommendation
-
+from routes.pages.signup import signup_bp as signup
+from routes.pages.login import login_bp as login
 
 app = Flask(__name__)
 
+app.secret_key = "keith-ranking-secret-key-2026"
 
 app.register_blueprint(home)
 app.register_blueprint(game)
 app.register_blueprint(ranking)
 app.register_blueprint(pd)
 app.register_blueprint(recommendation)
-
+app.register_blueprint(signup)
+app.register_blueprint(login)
 
 @app.errorhandler(404)
 def page_not_found(error):
