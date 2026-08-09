@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, abort
+from flask import Blueprint, render_template, request, abort, session
 import sqlite3
 
 
@@ -20,6 +20,7 @@ def all_games():
             ORDER BY id
             """
         ).fetchall()
+
     else:
         games = connection.execute(
             """
@@ -54,6 +55,10 @@ def game_detail(game_id):
         (game_id,)
     ).fetchone()
 
+    if game is None:
+        connection.close()
+        abort(404)
+
     developers = connection.execute(
         """
         SELECT company.id, company.name, company.started
@@ -78,14 +83,26 @@ def game_detail(game_id):
         (game_id,)
     ).fetchall()
 
+    is_favourite = False
+
+    if session.get("user_id") is not None:
+        saved_game = connection.execute(
+            """
+            SELECT id
+            FROM favourite
+            WHERE user_id = ? AND game_id = ?
+            """,
+            (session["user_id"], game_id)
+        ).fetchone()
+
+        is_favourite = saved_game is not None
+
     connection.close()
 
-    if game is None:
-        abort(404)
-    
     return render_template(
         "game.html",
         game=game,
         developers=developers,
-        publishers=publishers
+        publishers=publishers,
+        is_favourite=is_favourite
     )

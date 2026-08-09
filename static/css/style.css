@@ -2118,3 +2118,47 @@ input {
     font-size: 34px;
   }
 }
+
+.favourite-item {
+  display: flex;
+  flex-direction: column;
+}
+.favourite-item .game-card,
+.favourite-item .company-card {
+  flex: 1;
+}
+.favourite-remove-form {
+  margin-top: 10px;
+}
+.favourite-remove-form button {
+  background-color: #3b1720;
+  border: 1px solid #ef4444;
+  border-radius: 7px;
+  color: #fecaca;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  height: 40px;
+  width: 100%;
+}
+.favourite-remove-form button:hover {
+  background-color: #ef4444;
+  color: white;
+}
+.detail-favourite-form {
+  display: flex;
+}
+.detail-favourite-form button {
+  cursor: pointer;
+  height: 100%;
+}
+
+@media screen and (max-width: 700px) {
+  .detail-favourite-form {
+    width: 100%;
+  }
+}
+.company-detail-actions {
+  display: flex;
+  margin-top: 28px;
+}

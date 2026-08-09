@@ -6,6 +6,7 @@ from routes.pages.pd import pd_bp as pd
 from routes.pages.recommendation import recommendation_bp as recommendation
 from routes.pages.signup import signup_bp as signup
 from routes.pages.login import login_bp as login
+from routes.pages.favourite import favourite_bp as favourite
 
 app = Flask(__name__)
 
@@ -18,6 +19,7 @@ app.register_blueprint(pd)
 app.register_blueprint(recommendation)
 app.register_blueprint(signup)
 app.register_blueprint(login)
+app.register_blueprint(favourite)
 
 @app.errorhandler(404)
 def page_not_found(error):

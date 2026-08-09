@@ -1,0 +1,191 @@
+{% extends "nav.html" %} {% block title %} Favourites | Keith Ranking {%
+endblock %} {% block content %}
+
+<section class="all-games-top">
+  <div class="all-games-heading">
+    <p>YOUR ACCOUNT</p>
+
+    <h1>My Favourites</h1>
+
+    <span> View the games and companies saved to your account. </span>
+  </div>
+</section>
+
+<section class="all-games-section">
+  <div class="all-games-result">
+    <div>
+      <h2>Favourite Games</h2>
+
+      <p>{{ games|length }} games saved</p>
+    </div>
+  </div>
+
+  {% if games %}
+
+  <div class="all-games-grid">
+    {% for game in games %}
+
+    <div class="favourite-item">
+      <a href="/game/{{ game['id'] }}" class="game-card">
+        <div class="game-card-image">
+          <img
+            src="{{ url_for('static', filename='images/covers/' ~ game['cover']) }}"
+            alt="{{ game['name'] }}"
+          />
+
+          <div class="game-card-ranking">
+            {% if game['id'] < 10 %} #0{{ game['id'] }} {% else %} #{{
+            game['id'] }} {% endif %}
+          </div>
+        </div>
+
+        <div class="game-card-information">
+          <h2>{{ game['name'] }}</h2>
+
+          <p class="game-card-genre">{{ game['genre'] }}</p>
+
+          <div class="game-card-bottom">
+            <span>{{ game['release_date'] }}</span>
+
+            <strong>View Details →</strong>
+          </div>
+        </div>
+      </a>
+
+      <form
+        class="favourite-remove-form"
+        action="/favourite/game/{{ game['id'] }}"
+        method="post"
+      >
+        <button type="submit">Remove</button>
+      </form>
+    </div>
+
+    {% endfor %}
+  </div>
+
+  {% else %}
+
+  <div class="all-games-empty">
+    <h2>No favourite games</h2>
+
+    <p>Games you save will appear here.</p>
+
+    <a href="/all">Browse Games</a>
+  </div>
+
+  {% endif %}
+</section>
+
+<section class="company-page-main">
+  <div class="company-result-row">
+    <div>
+      <h2>Favourite Companies</h2>
+
+      <p>{{ companies|length }} companies saved</p>
+    </div>
+  </div>
+
+  {% if companies %}
+
+  <div class="company-grid">
+    {% for company in companies %}
+
+    <div class="favourite-item">
+      <a href="/company/{{ company['id'] }}" class="company-card">
+        <div class="company-card-top">
+          <div class="company-card-letter">{{ company['name'][0] }}</div>
+
+          <div class="company-card-number">
+            {% if company['id'] < 10 %} #00{{ company['id'] }} {% elif
+            company['id'] < 100 %} #0{{ company['id'] }} {% else %} #{{
+            company['id'] }} {% endif %}
+          </div>
+        </div>
+
+        <h2>{{ company['name'] }}</h2>
+
+        <p class="company-started">
+          {% if company['started'] %} Started: {{ company['started'] }} {% else
+          %} Started: Information unavailable {% endif %}
+        </p>
+
+        <div class="company-role-row">
+          {% if company['developed_count'] > 0 %}
+
+          <span class="company-developer-label"> Developer </span>
+
+          {% endif %} {% if company['published_count'] > 0 %}
+
+          <span class="company-publisher-label"> Publisher </span>
+
+          {% endif %}
+        </div>
+
+        <div class="company-count-area">
+          <div>
+            <strong>{{ company['developed_count'] }}</strong>
+
+            <span>Games Developed</span>
+          </div>
+
+          <div>
+            <strong>{{ company['published_count'] }}</strong>
+
+            <span>Games Published</span>
+          </div>
+        </div>
+
+        <div class="company-card-bottom">
+          <span>View Company Details</span>
+
+          <strong>→</strong>
+        </div>
+      </a>
+
+      <form
+        class="favourite-remove-form"
+        action="/favourite/company/{{ company['id'] }}"
+        method="post"
+      >
+        <button type="submit">Remove</button>
+      </form>
+    </div>
+
+    {% endfor %}
+  </div>
+
+  {% else %}
+
+  <div class="company-empty-box">
+    <h2>No favourite companies</h2>
+
+    <p>Companies you save will appear here.</p>
+
+    <a href="/pd">Browse Companies</a>
+  </div>
+
+  {% endif %}
+</section>
+
+<footer class="home-footer">
+  <div>
+    <h3>Keith Ranking</h3>
+
+    <p>A game ranking and discovery website.</p>
+  </div>
+
+  <div class="home-footer-links">
+    <a href="/">Home</a>
+
+    <a href="/all">Games</a>
+
+    <a href="/pd">Companies</a>
+
+    <a href="/ranking">Ranking</a>
+  </div>
+
+  <p>© 2026 Keith Ranking</p>
+</footer>
+
+{% endblock %}

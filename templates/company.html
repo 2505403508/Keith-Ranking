@@ -15,6 +15,27 @@
       <span> Started: {{ company['started'] }} </span>
     </div>
   </div>
+
+  <div class="company-detail-actions">
+    {% if session.get("user_id") %}
+
+    <form
+      class="detail-favourite-form"
+      action="/favourite/company/{{ company['id'] }}"
+      method="post"
+    >
+      <button type="submit" class="game-detail-dark-button">
+        {% if is_favourite %} Remove from Favourites {% else %} Add to
+        Favourites {% endif %}
+      </button>
+    </form>
+
+    {% else %}
+
+    <a href="/login" class="game-detail-dark-button"> Log In to Save </a>
+
+    {% endif %}
+  </div>
 </section>
 
 <section class="company-detail-summary">

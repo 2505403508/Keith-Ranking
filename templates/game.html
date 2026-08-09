@@ -135,6 +135,25 @@ endblock %} {% block content %}
     </div>
 
     <div class="game-detail-buttons">
+      {% if session.get("user_id") %}
+
+      <form
+        class="detail-favourite-form"
+        action="/favourite/game/{{ game['id'] }}"
+        method="post"
+      >
+        <button type="submit" class="game-detail-dark-button">
+          {% if is_favourite %} Remove from Favourites {% else %} Add to
+          Favourites {% endif %}
+        </button>
+      </form>
+
+      {% else %}
+
+      <a href="/login" class="game-detail-dark-button"> Log In to Save </a>
+
+      {% endif %}
+
       <a href="/all" class="game-detail-blue-button"> Browse More Games </a>
 
       <a href="/ranking" class="game-detail-dark-button"> View Ranking </a>

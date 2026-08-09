@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, abort
+from flask import Blueprint, render_template, request, abort, session
 import sqlite3
 
 
@@ -87,6 +87,10 @@ def company_detail(company_id):
         (company_id,)
     ).fetchone()
 
+    if company is None:
+        connection.close()
+        abort(404)
+
     developed_games = connection.execute(
         """
         SELECT
@@ -125,14 +129,26 @@ def company_detail(company_id):
         (company_id,)
     ).fetchall()
 
-    connection.close()
+    is_favourite = False
 
-    if company is None:
-        abort(404)
+    if session.get("user_id") is not None:
+        saved_company = connection.execute(
+            """
+            SELECT id
+            FROM company_favourite
+            WHERE user_id = ? AND company_id = ?
+            """,
+            (session["user_id"], company_id)
+        ).fetchone()
+
+        is_favourite = saved_company is not None
+
+    connection.close()
 
     return render_template(
         "company.html",
         company=company,
         developed_games=developed_games,
-        published_games=published_games
+        published_games=published_games,
+        is_favourite=is_favourite
     )

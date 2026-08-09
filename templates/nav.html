@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>{% block title %} Keith Ranking {% endblock %}</title>
+    <title>{% block title %}Keith Ranking{% endblock %}</title>
 
     <link
       rel="stylesheet"
@@ -34,10 +34,13 @@
             <a href="/ranking">Ranking</a>
           </li>
         </ul>
+
         <div class="navbar-account">
           {% if session.get("user_id") %}
 
           <span class="navbar-username"> {{ session.get("username") }} </span>
+
+          <a href="/favourites" class="navbar-login"> Favourites </a>
 
           <a href="/logout" class="navbar-login"> Log Out </a>
 
@@ -52,6 +55,6 @@
       </div>
     </nav>
 
-    <main class="page-content">{% block content %} {% endblock %}</main>
+    <main class="page-content">{% block content %}{% endblock %}</main>
   </body>
 </html>
