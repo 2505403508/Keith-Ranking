@@ -3,6 +3,28 @@ endblock %} {% block content %}
 
 <section class="recommendation-page-top">
   <div class="recommendation-page-heading">
+    {% if recommendation_type == "personal" %}
+
+    <p>PERSONALISED GAME RECOMMENDATION</p>
+
+    <h1>Recommended For You</h1>
+
+    {% if favourite_genre %}
+
+    <span>
+      Based on {{ history_count }} games in your browsing history, your most
+      viewed genre is {{ favourite_genre }}.
+    </span>
+
+    {% else %}
+
+    <span>
+      Browse some game detail pages first so Keith Ranking can learn what types
+      of games you are interested in.
+    </span>
+
+    {% endif %} {% else %}
+
     <p>RANDOM GAME RECOMMENDATION</p>
 
     <h1>Your Recommended Game</h1>
@@ -11,6 +33,28 @@ endblock %} {% block content %}
       Keith Ranking has selected one game from the database for you. Refresh the
       recommendation to discover another game.
     </span>
+
+    {% endif %}
+
+    <div class="recommendation-buttons">
+      <a href="/recommendation" class="recommendation-second-button">
+        Random Recommendation
+      </a>
+
+      {% if session.get("user_id") %}
+
+      <a href="/recommendation/personal" class="recommendation-main-button">
+        Personal Recommendation
+      </a>
+
+      {% else %}
+
+      <a href="/login" class="recommendation-main-button">
+        Log In for Personal Recommendation
+      </a>
+
+      {% endif %}
+    </div>
   </div>
 </section>
 
@@ -26,11 +70,19 @@ endblock %} {% block content %}
     <div class="recommendation-banner-dark"></div>
 
     <div class="recommendation-banner-text">
+      {% if recommendation_type == "personal" %}
+
+      <p>BASED ON YOUR BROWSING</p>
+
+      {% else %}
+
       <p>WE RECOMMEND</p>
+
+      {% endif %}
 
       <h2>{{ game['name'] }}</h2>
 
-      <span> {{ game['genre'] }} </span>
+      <span>{{ game['genre'] }}</span>
     </div>
   </div>
 
@@ -48,13 +100,16 @@ endblock %} {% block content %}
       <h2>{{ game['name'] }}</h2>
 
       <p class="recommendation-description">
-        This game was randomly selected from the Keith Ranking database. You can
-        view its full page or ask the website to recommend another game.
+        {% if recommendation_type == "personal" %} This game was selected using
+        the genres in your browsing history. It has not appeared in your
+        browsing history yet. {% else %} This game was randomly selected from
+        the Keith Ranking database. You can view its full page or ask the
+        website to recommend another game. {% endif %}
       </p>
 
       <div class="recommendation-detail-grid">
         <div class="recommendation-detail-box">
-          <span> Ranking </span>
+          <span>Ranking</span>
 
           <strong>
             {% if game['id'] < 10 %} #0{{ game['id'] }} {% else %} #{{
@@ -63,15 +118,15 @@ endblock %} {% block content %}
         </div>
 
         <div class="recommendation-detail-box">
-          <span> Release Date </span>
+          <span>Release Date</span>
 
-          <strong> {{ game['release_date'] }} </strong>
+          <strong>{{ game['release_date'] }}</strong>
         </div>
 
         <div class="recommendation-detail-box recommendation-detail-wide">
-          <span> Genre </span>
+          <span>Genre</span>
 
-          <strong> {{ game['genre'] }} </strong>
+          <strong>{{ game['genre'] }}</strong>
         </div>
       </div>
 
@@ -80,9 +135,19 @@ endblock %} {% block content %}
           View Game Details
         </a>
 
+        {% if recommendation_type == "personal" %}
+
+        <a href="/recommendation/personal" class="recommendation-second-button">
+          Recommend Another Game
+        </a>
+
+        {% else %}
+
         <a href="/recommendation" class="recommendation-second-button">
           Recommend Another Game
         </a>
+
+        {% endif %}
       </div>
     </div>
   </div>
@@ -91,14 +156,56 @@ endblock %} {% block content %}
 {% else %}
 
 <section class="recommendation-empty">
+  {% if recommendation_type == "personal" and history_count == 0 %}
+
+  <h2>No browsing history yet</h2>
+
+  <p>
+    Open some game detail pages while logged in, then return here for a personal
+    recommendation.
+  </p>
+
+  <a href="/all">Browse Games</a>
+
+  {% elif recommendation_type == "personal" %}
+
+  <h2>No new game could be recommended</h2>
+
+  <p>There are no unviewed games available for this recommendation.</p>
+
+  <a href="/all">Browse All Games</a>
+
+  {% else %}
+
   <h2>No game could be recommended</h2>
 
   <p>There are currently no games available in the database.</p>
 
-  <a href="/all"> Browse All Games </a>
+  <a href="/all">Browse All Games</a>
+
+  {% endif %}
 </section>
 
-{% endif %}
+{% endif %} {% if recommendation_type == "personal" and history_count > 0 %}
+
+<section class="recommendation-bottom">
+  <div>
+    <p>BROWSING HISTORY</p>
+
+    <h2>Clear recommendation history</h2>
+
+    <span>
+      This removes the games used for your personal recommendations. It does not
+      remove your favourites.
+    </span>
+  </div>
+
+  <form action="/recommendation/history/clear" method="post">
+    <button type="submit">Clear History</button>
+  </form>
+</section>
+
+{% else %}
 
 <section class="recommendation-bottom">
   <div>
@@ -109,8 +216,10 @@ endblock %} {% block content %}
     <span> View the full game database and choose a game yourself. </span>
   </div>
 
-  <a href="/all"> View All Games </a>
+  <a href="/all">View All Games</a>
 </section>
+
+{% endif %}
 
 <footer class="home-footer">
   <div>
@@ -120,13 +229,13 @@ endblock %} {% block content %}
   </div>
 
   <div class="home-footer-links">
-    <a href="/"> Home </a>
+    <a href="/">Home</a>
 
-    <a href="/all"> Games </a>
+    <a href="/all">Games</a>
 
-    <a href="/pd"> Companies </a>
+    <a href="/pd">Companies</a>
 
-    <a href="/ranking"> Ranking </a>
+    <a href="/ranking">Ranking</a>
   </div>
 
   <p>© 2026 Keith Ranking</p>

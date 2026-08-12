@@ -86,6 +86,16 @@ def game_detail(game_id):
     is_favourite = False
 
     if session.get("user_id") is not None:
+        connection.execute(
+            """
+            INSERT OR IGNORE INTO browsing_history (user_id, game_id)
+            VALUES (?, ?)
+            """,
+            (session["user_id"], game_id)
+        )
+
+        connection.commit()
+
         saved_game = connection.execute(
             """
             SELECT id

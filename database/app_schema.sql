@@ -94,6 +94,25 @@ CREATE TABLE company_favourite (
         ON DELETE CASCADE
 );
 
+CREATE TABLE browsing_history (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    game_id INTEGER NOT NULL,
+    viewed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE (user_id, game_id),
+
+    FOREIGN KEY (user_id)
+        REFERENCES user(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (game_id)
+        REFERENCES game(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
 CREATE INDEX idx_game_developer_game
     ON game_developer(game_id);
 
@@ -117,3 +136,9 @@ CREATE INDEX idx_company_favourite_user
 
 CREATE INDEX idx_company_favourite_company
     ON company_favourite(company_id);
+
+CREATE INDEX idx_browsing_history_user
+    ON browsing_history(user_id);
+
+CREATE INDEX idx_browsing_history_game
+    ON browsing_history(game_id);
