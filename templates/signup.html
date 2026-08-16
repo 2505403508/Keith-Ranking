@@ -1,5 +1,5 @@
-{% extends "nav.html" %} {% block title %}Sign Up | Keith Ranking{% endblock %}
-{% block content %}
+{% extends "nav.html" %} {% block title %} Sign Up | Keith Ranking {% endblock
+%} {% block content %}
 
 <section class="account-page">
   <div class="account-box">
@@ -12,7 +12,9 @@
     </p>
 
     {% if error %}
+
     <p class="account-error">{{ error }}</p>
+
     {% endif %}
 
     <form class="account-form" method="post">
@@ -22,6 +24,10 @@
         type="text"
         id="username"
         name="username"
+        minlength="3"
+        maxlength="20"
+        pattern="[A-Za-z0-9_]+"
+        title="Use letters, numbers and underscores only."
         value="{{ request.form.get('username', '') }}"
         required
       />
@@ -32,13 +38,21 @@
         type="email"
         id="email"
         name="email"
+        maxlength="100"
         value="{{ request.form.get('email', '') }}"
         required
       />
 
       <label for="password">Password</label>
 
-      <input type="password" id="password" name="password" required />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        minlength="8"
+        maxlength="128"
+        required
+      />
 
       <label for="confirm_password">Confirm Password</label>
 
@@ -46,6 +60,8 @@
         type="password"
         id="confirm_password"
         name="confirm_password"
+        minlength="8"
+        maxlength="128"
         required
       />
 

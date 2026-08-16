@@ -2162,3 +2162,21 @@ input {
   display: flex;
   margin-top: 28px;
 }
+.recommendation-bottom form {
+  margin: 0;
+}
+
+.recommendation-bottom button {
+  background: #ffffff;
+  border: none;
+  border-radius: 8px;
+  color: #0b1120;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 15px 24px;
+}
+
+.recommendation-bottom button:hover {
+  background: #e7efff;
+}

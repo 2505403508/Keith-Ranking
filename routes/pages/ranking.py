@@ -7,7 +7,8 @@ ranking_bp = Blueprint("ranking", __name__)
 
 @ranking_bp.route("/ranking")
 def ranking():
-    search = request.args.get("search", "")
+    search = request.args.get("search", "").strip()
+    search = search[:100]
 
     connection = sqlite3.connect("database/app.db")
     connection.row_factory = sqlite3.Row
@@ -29,6 +30,7 @@ def ranking():
             ORDER BY id
             """
         ).fetchall()
+
     else:
         games = connection.execute(
             """

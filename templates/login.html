@@ -1,4 +1,4 @@
-{% extends "nav.html" %} {% block title %}Log In | Keith Ranking{% endblock %}
+{% extends "nav.html" %} {% block title %} Log In | Keith Ranking {% endblock %}
 {% block content %}
 
 <section class="account-page">
@@ -10,7 +10,9 @@
     <p class="account-text">Log in to view and manage your favourites.</p>
 
     {% if error %}
+
     <p class="account-error">{{ error }}</p>
+
     {% endif %}
 
     <form class="account-form" method="post">
@@ -20,13 +22,20 @@
         type="text"
         id="login_value"
         name="login_value"
+        maxlength="100"
         value="{{ request.form.get('login_value', '') }}"
         required
       />
 
       <label for="password">Password</label>
 
-      <input type="password" id="password" name="password" required />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        maxlength="128"
+        required
+      />
 
       <button type="submit">Log In</button>
     </form>

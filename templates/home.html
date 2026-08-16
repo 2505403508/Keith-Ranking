@@ -17,13 +17,22 @@
     </p>
 
     <form class="home-search-form" action="/all" method="get">
-      <input type="text" name="search" placeholder="Search for a game..." />
+      <input
+        type="text"
+        name="search"
+        maxlength="100"
+        placeholder="Search for a game..."
+      />
+
       <button type="submit">Search</button>
     </form>
 
     <div class="home-hero-buttons">
-      <a href="/all" class="home-blue-button">Browse Games</a>
-      <a href="/ranking" class="home-dark-button">View Rankings</a>
+      <a href="/all" class="home-blue-button"> Browse Games </a>
+
+      <a href="/recommendation" class="home-dark-button"> Recommend a Game </a>
+
+      <a href="/ranking" class="home-dark-button"> View Rankings </a>
     </div>
   </div>
 
@@ -38,8 +47,10 @@
 
       <div class="home-image-text">
         <p>FEATURED GAME</p>
+
         <h2>{{ games[0]['name'] }}</h2>
-        <a href="/game/{{ games[0]['id'] }}">View Game</a>
+
+        <a href="/game/{{ games[0]['id'] }}"> View Game </a>
       </div>
     </div>
 
@@ -50,41 +61,55 @@
 <section class="home-features">
   <div class="home-section-title">
     <p>MAIN FEATURES</p>
+
     <h2>Explore Keith Ranking</h2>
-    <span>Choose one of the options below to continue.</span>
+
+    <span> Choose one of the options below to continue. </span>
   </div>
 
   <div class="home-feature-grid">
     <a href="/all" class="home-feature-card">
       <div class="home-feature-icon">🎮</div>
+
       <h3>All Games</h3>
+
       <p>
         Browse all 120 games in the database and view information about each
         game.
       </p>
+
       <span>Browse games →</span>
     </a>
 
     <a href="/pd" class="home-feature-card">
       <div class="home-feature-icon">🏢</div>
+
       <h3>Game Companies</h3>
+
       <p>Learn about the developers and publishers that created the games.</p>
+
       <span>View companies →</span>
     </a>
 
     <a href="/ranking" class="home-feature-card">
       <div class="home-feature-icon">🏆</div>
+
       <h3>Game Rankings</h3>
+
       <p>
         View the current game ranking and discover the highest-ranked games.
       </p>
+
       <span>View rankings →</span>
     </a>
 
     <a href="/recommendation" class="home-feature-card">
       <div class="home-feature-icon">⭐</div>
+
       <h3>Recommendation</h3>
+
       <p>Not sure what to play? Let the website recommend a game for you.</p>
+
       <span>Recommend a game →</span>
     </a>
   </div>
@@ -94,10 +119,11 @@
   <div class="home-ranking-heading">
     <div>
       <p>CURRENT RANKING</p>
+
       <h2>Popular Games of 2026</h2>
     </div>
 
-    <a href="/ranking">View Full Ranking</a>
+    <a href="/ranking"> View Full Ranking </a>
   </div>
 
   <div class="home-ranking-list">
@@ -111,6 +137,7 @@
 
       <div>
         <h3>{{ game['name'] }}</h3>
+
         <p>{{ game['genre'] }} | {{ game['release_date'] }}</p>
       </div>
 
@@ -124,6 +151,7 @@
 <section class="home-recommendation">
   <div>
     <p>DO NOT KNOW WHAT TO PLAY?</p>
+
     <h2>Find a game recommendation</h2>
 
     <span>
@@ -132,19 +160,23 @@
     </span>
   </div>
 
-  <a href="/recommendation">Recommend a Game</a>
+  <a href="/recommendation"> Recommend a Game </a>
 </section>
 
 <footer class="home-footer">
   <div>
     <h3>Keith Ranking</h3>
+
     <p>A game ranking and discovery website.</p>
   </div>
 
   <div class="home-footer-links">
     <a href="/">Home</a>
+
     <a href="/all">Games</a>
+
     <a href="/pd">Companies</a>
+
     <a href="/ranking">Ranking</a>
   </div>
 

@@ -7,7 +7,8 @@ game_bp = Blueprint("game", __name__)
 
 @game_bp.route("/all")
 def all_games():
-    search = request.args.get("search", "")
+    search = request.args.get("search", "").strip()
+    search = search[:100]
 
     connection = sqlite3.connect("database/app.db")
     connection.row_factory = sqlite3.Row
