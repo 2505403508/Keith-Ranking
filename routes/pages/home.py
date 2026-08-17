@@ -8,6 +8,7 @@ home_bp = Blueprint("home", __name__)
 @home_bp.route("/")
 def home():
     connection = sqlite3.connect("database/app.db")
+    connection.execute("PRAGMA foreign_keys = ON")
     connection.row_factory = sqlite3.Row
 
     games = connection.execute(

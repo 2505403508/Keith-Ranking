@@ -12,7 +12,7 @@ CREATE TABLE game (
 CREATE TABLE company (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
-    started INTEGER
+    started TEXT NOT NULL
 );
 
 CREATE TABLE game_developer (

@@ -11,6 +11,7 @@ def ranking():
     search = search[:100]
 
     connection = sqlite3.connect("database/app.db")
+    connection.execute("PRAGMA foreign_keys = ON")
     connection.row_factory = sqlite3.Row
 
     top_games = connection.execute(
