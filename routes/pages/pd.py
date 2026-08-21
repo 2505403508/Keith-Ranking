@@ -163,7 +163,7 @@ def company_detail(company_id):
     # 所有公司资料读取完成后关闭数据库连接。Close the database.
     connection.close()
 
-    # 把公司、开发游戏、发行游戏和收藏状态传给公司详情页面。Show the company details.
+    # 把公司开发游戏、发行游戏和收藏状态传给公司详情页面。Show the company details.
     return render_template(
         "company.html",
         company=company,

@@ -52,7 +52,7 @@ def ranking():
     # 排名数据读取完成后关闭数据库连接。Close the database.
     connection.close()
 
-    # 把前三名、完整结果和搜索内容传给排名页面。Show the ranking page.
+    # 把前三名完整结果和搜索内容传给排名页面。Show the ranking page.
     return render_template(
         "ranking.html",
         top_games=top_games,

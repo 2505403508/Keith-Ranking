@@ -90,13 +90,13 @@ def signup():
                     (username, email, password_hash)
                 )
 
-                # 保存新账号并关闭数据库，然后把用户送到登录页面。Save the account.
+                #保存新账号并关闭数据库，然后把用户送到登录页面。Save the account.
                 connection.commit()
                 connection.close()
 
                 return redirect("/login")
 
-            # 如果注册没有成功，在重新显示页面前关闭数据库连接。Close the database.
+            # 如果注册没有成功在重新显示页面前关闭数据库连接。Close the database.
             connection.close()
 
     # 第一次打开页面或验证失败时，显示注册页面和错误信息。Show the sign-up page.

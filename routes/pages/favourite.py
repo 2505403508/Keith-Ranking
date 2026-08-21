@@ -44,7 +44,7 @@ def favourites():
         (session["user_id"],)
     ).fetchall()
 
-    # 读取当前用户收藏的公司，并计算每个公司开发和发行的游戏数量。Get favourite companies.
+    #读取当前用户收藏的公司，并计算每个公司开发和发行的游戏数量。Get favourite companies.
     companies = connection.execute(
         """
         SELECT
@@ -74,7 +74,7 @@ def favourites():
         (session["user_id"],)
     ).fetchall()
 
-    # 收藏资料读取完成后关闭数据库连接。Close the database.
+    #收藏资料读取完成后关闭数据库连接。Close the database.
     connection.close()
 
     # 把当前用户的游戏收藏和公司收藏传给收藏页面。Show the favourites.
@@ -112,7 +112,7 @@ def favourite_game(game_id):
         connection.close()
         abort(404)
 
-    # 检查这个游戏是否已经在当前用户自己的收藏中。Check the saved game.
+    #检查这个游戏是否已经在当前用户自己的收藏中。Check the saved game.
     saved_game = connection.execute(
         """
         SELECT id
@@ -172,7 +172,7 @@ def favourite_company(company_id):
         (company_id,)
     ).fetchone()
 
-    # 如果公司不存在，就关闭数据库并显示404页面。Show 404 if not found.
+    #如果公司不存在就关闭数据库并显示404页面。Show 404 if not found.
     if company is None:
         connection.close()
         abort(404)

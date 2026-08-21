@@ -154,7 +154,7 @@ def clear_recommendation_history():
     if session.get("user_id") is None:
         return redirect("/login")
 
-    # 打开数据库，准备删除当前用户自己的历史记录。Open the database.
+    # 打开数据库准备删除当前用户自己的历史记录。Open the database.
     connection = get_connection()
 
     # 只删除session中这个用户的浏览历史，不会删除其他用户的记录。Clear this user's history.
